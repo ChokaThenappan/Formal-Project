@@ -1,0 +1,60 @@
+2024-11-18 14:43:56.457398 (1441604) main____ INFO    ----------------------------------------
+2024-11-18 14:43:56.457475 (1441604) main____ INFO    Jasper version info
+2024-11-18 14:43:56.457484 (1441604) main____ INFO      tool      : Jasper 2024.06
+2024-11-18 14:43:56.457493 (1441604) main____ INFO      version   : 2024.06p002 64 bits
+2024-11-18 14:43:56.457498 (1441604) main____ INFO      build date: 2024.09.02 16:28:38 UTC
+2024-11-18 14:43:56.457501 (1441604) main____ INFO    ----------------------------------------
+2024-11-18 14:43:56.457503 (1441604) main____ INFO    Runtime info:
+2024-11-18 14:43:56.457507 (1441604) main____ INFO      platform  : Linux 4.18.0-553.27.1.el8_10.x86_64 x86_64
+2024-11-18 14:43:56.457515 (1441604) main____ INFO      hostname  : cadpc13
+2024-11-18 14:43:56.457520 (1441604) main____ INFO      pid       : 1441604
+2024-11-18 14:43:56.457523 (1441604) main____ INFO      arguments : '-style' 'windows' 'router_fifo_setup.tcl'
+2024-11-18 14:43:56.457527 (1441604) main____ INFO      locale    : UTF-8
+2024-11-18 14:43:56.457529 (1441604) main____ INFO    ----------------------------------------
+2024-11-18 14:43:56.457532 (1441604) main____ INFO    System resource limits info:
+2024-11-18 14:43:56.457537 (1441604) main____ INFO      virtual memory: unlimited
+2024-11-18 14:43:56.457540 (1441604) main____ INFO      cpu time      : unlimited
+2024-11-18 14:43:56.457549 (1441604) main____ INFO      processes     : 255240
+2024-11-18 14:43:56.457558 (1441604) main____ INFO      stack size    : 8388608 B
+2024-11-18 14:43:56.457563 (1441604) main____ INFO      core file size: 0 B
+2024-11-18 14:43:56.457567 (1441604) main____ INFO      open files    : 1024
+2024-11-18 14:43:56.457571 (1441604) main____ INFO      file size     : unlimited
+2024-11-18 14:43:56.457574 (1441604) main____ INFO    ----------------------------------------
+2024-11-18 14:43:56.457576 (1441604) main____ INFO    Memory statistics:
+2024-11-18 14:43:56.457580 (1441604) main____ INFO      total physical memory  : 65401512 kB
+2024-11-18 14:43:56.457584 (1441604) main____ INFO      free physical memory   : 12789476 kB
+2024-11-18 14:43:56.457588 (1441604) main____ INFO      committed address space: 298892296 kB
+2024-11-18 14:43:56.457590 (1441604) main____ INFO    ----------------------------------------
+2024-11-18 14:43:56.458492 (1441604) main____ INFO    Important environment variables:
+2024-11-18 14:43:56.458523 (1441604) main____ INFO      CDS_LIC_FILE       : '5280@bioeelincad.ee.columbia.edu'
+2024-11-18 14:43:56.458528 (1441604) main____ INFO      DISPLAY            : ':5'
+2024-11-18 14:43:56.458533 (1441604) main____ INFO      JASPER_CPU_CHECK   : '1'
+2024-11-18 14:43:56.458536 (1441604) main____ INFO      JASPER_INSTALL_DIR : '/tools/cadence/jasper_2024.06p002'
+2024-11-18 14:43:56.458540 (1441604) main____ INFO      JASPER_KERNEL_CHECK: '1'
+2024-11-18 14:43:56.458543 (1441604) main____ INFO      JASPER_OS_CHECK    : '1'
+2024-11-18 14:43:56.458547 (1441604) main____ INFO      LANG               : 'en_US.UTF-8'
+2024-11-18 14:43:56.458550 (1441604) main____ INFO    ----------------------------------------
+2024-11-18 14:43:56.459232 (1441604) lic_core INFO    Initializing license system ...
+2024-11-18 14:43:56.471041 (1441604) lic_core INFO    ... license system initialized.
+2024-11-18 14:43:56.541194 (1441604) lic__man INFO    Claim 'main' for <ui>.
+2024-11-18 14:43:56.541232 (1441604) lic_core INFO    (1) checking out 'jasper_interactive' ...
+2024-11-18 14:43:56.559297 (1441604) lic_core INFO    ... (1) checkout succeeded
+2024-11-18 14:43:56.559349 (1441604) lic__man INFO    Claim 'fpv' for <ui>.
+2024-11-18 14:43:56.559365 (1441604) lic_core INFO    (2) checking out 'jasper_fpv' ...
+2024-11-18 14:43:56.567704 (1441604) lic_core INFO    ... (2) checkout failed (error: -5) ("FLEXnet ERROR(-5, 0, 0): No such feature exists.")
+2024-11-18 14:43:56.567742 (1441604) lic_core INFO    (3) checking out 'jasper_fao' ...
+2024-11-18 14:43:56.582095 (1441604) lic_core INFO    ... (3) checkout succeeded
+2024-11-18 14:43:56.582680 (1441604) main____ INFO    Tool inactivity delay is 480000 ms.
+2024-11-18 14:43:57.489389 (1441604) lic__man INFO    Claim 'fpv' for <ui>.
+2024-11-18 14:43:57.947332 (1441604) lic__man INFO    Unclaim 'fpv' for <ui>.
+2024-11-18 14:43:57.947388 (1441604) lic__man INFO    Claim 'fpv' for <ui>.
+2024-11-18 14:43:58.037226 (1441604) session_ INFO    Starting analysis session with session id 'session_0' (launcher: <local>) ...
+2024-11-18 14:43:58.040066 (1441604) session_ INFO    Analysis session with session id 'session_0' started (pid: 1441634)
+2024-11-18 14:44:00.567708 (1441604) session_ INFO    Analysis session 'session_0' connected to the console (host: 127.0.0.1:49506)
+2024-11-18 14:44:01.504321 (1441604) main____ INFO    Releasing console memory by request of analysis session 'session_0'.
+2024-11-18 14:44:01.505758 (1441604) lic__man INFO    Unclaim everything for 'session_0'.
+2024-11-18 14:44:02.575482 (1441604) lic__man INFO    Unclaim everything for 'session_0'.
+2024-11-18 14:50:09.147252 (1441604) lic__man INFO    Claim 'fpv' for 'session_0'.
+2024-11-18 14:50:09.147301 (1441604) lic__man INFO    Claim 'fpv' for 'session_0/prove-0'.
+2024-11-18 14:50:09.563463 (1441604) lic__man INFO    Unclaim everything for 'session_0/prove-0'.
+2024-11-18 15:00:59.813163 (1441604) lic__man INFO    Entering idle state.
