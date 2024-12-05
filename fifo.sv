@@ -1,4 +1,4 @@
-//Author: Lars Fischer
+//Author: Lars Fischer 123
 module fifo #(
     parameter DATA_WIDTH = 8,       // Width of the data bus
     parameter DEPTH = 8            // Depth of the FIFO
@@ -26,7 +26,7 @@ module fifo #(
     // Write and read pointers
     logic [ADDR_WIDTH-1:0] wr_ptr;
     logic [ADDR_WIDTH-1:0] rd_ptr;
-    logic [ADDR_WIDTH-1:0] counter;
+    logic [ADDR_WIDTH:0] counter;
     
     // FIFO status flags
     logic full = 0;
@@ -58,7 +58,14 @@ module fifo #(
             if (wr_en && wr_ready && !(rd_en && rd_valid)) begin
                 if (wr_ptr + 1'b1  == rd_ptr)
                     full <= 1;
-                empty <= 0;
+	    if (counter == DEPTH - 2) begin
+                    full <= 1;
+            end
+	    if (counter == DEPTH - 1) begin
+	    	    empty <= 1;
+	    end
+		else
+                    empty <= 0;
 		counter <= counter + 1;
             end else if (!(wr_en && wr_ready) && (rd_en && rd_valid)) begin
                 if (rd_ptr + 1'b1 == wr_ptr)
@@ -84,9 +91,19 @@ module fifo #(
 NO_WRITE_TO_FULL_FIFO:assert property(@(posedge clk) disable iff (~rst_n) 
 									full |-> !(wr_ready && wr_en));
 NO_WRITE_TO_FULL_FIFO2:assert property(@(posedge clk) disable iff (~rst_n) 
-									(counter == DEPTH) |-> full);
+									(counter == DEPTH - 1) |-> full);
 NO_READ_FROM_EMPTY_FIFO:assert property(@(posedge clk) disable iff (~rst_n) 
 									empty |-> !(rd_valid && rd_en));
 NO_READ_FROM_EMPTY_FIFO2:assert property(@(posedge clk) disable iff (~rst_n) 
 									(counter == 0) |-> empty);
+// Cover properties for number of current entries
+CNT_0:cover property (@(posedge clk) disable iff (~rst_n) (counter == 0));
+CNT_1:cover property (@(posedge clk) disable iff (~rst_n) (counter == 1));
+CNT_2:cover property (@(posedge clk) disable iff (~rst_n) (counter == 2));
+CNT_3:cover property (@(posedge clk) disable iff (~rst_n) (counter == 3));
+CNT_4:cover property (@(posedge clk) disable iff (~rst_n) (counter == 4));
+CNT_5:cover property (@(posedge clk) disable iff (~rst_n) (counter == 5));
+CNT_6:cover property (@(posedge clk) disable iff (~rst_n) (counter == 6));
+CNT_7:cover property (@(posedge clk) disable iff (~rst_n) (counter == 7));
+CNT_8:cover property (@(posedge clk) disable iff (~rst_n) (counter != 8));
 endmodule

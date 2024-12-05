@@ -131,6 +131,12 @@ module router_fifo
   a_used_onehot: assert property (@(posedge clk) disable iff(rst) $onehot(used))
     else $error("Fail: a_used_onehot");
 
+// Properties defined for Formal
+// PROP_0: assert property(@(posedge clk) disable iff (~rst)	(g_i == Depth - 1) |-> full); // Not Working cuz g_i is genvar
+RESET: cover property (@(posedge clk) disable iff (rst) 	rst|=> empty && !full);
+PROP_1: assert property(@(posedge clk) disable iff (rst)	empty	|-> used == 1);
+PROP_2: cover property(@(posedge clk) disable iff (rst)	(full && !wrreq) throughout (rdreq [*Depth]) |=> empty);
+
 // pragma coverage on
 //VCS coverage on
 `endif // ~SYNTHESIS

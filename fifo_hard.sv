@@ -26,7 +26,7 @@ module fifo #(
     // Write and read pointers
     logic [ADDR_WIDTH-1:0] wr_ptr;
     logic [ADDR_WIDTH-1:0] rd_ptr;
-    logic [ADDR_WIDTH-1:0] counter;
+    logic [ADDR_WIDTH:0] counter;
     
     // FIFO status flags
     logic full = 0;
@@ -56,15 +56,18 @@ module fifo #(
             
             // Update counter and flags
             if (wr_en && wr_ready && !(rd_en && rd_valid)) begin
-                if (wr_ptr == rd_ptr)
-                    full <= 1;
+//                if (wr_ptr == rd_ptr)
+//                    full <= 1;
                 empty <= 0;
 		counter <= counter + 1;
+		if (wr_ptr == rd_ptr || counter == DEPTH - 1)
+               		full <= 1;
             end else if (!(wr_en && wr_ready) && (rd_en && rd_valid)) begin
                 if (rd_ptr + 1 == wr_ptr)
                     empty <= 1;
                 full <= 0;
 		counter <= counter - 1;
+
 	    end
         end
     end

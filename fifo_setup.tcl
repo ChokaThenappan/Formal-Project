@@ -1,7 +1,7 @@
 clear -all
 
-analyze -sv09 fifo.sv
-elaborate -top fifo
+analyze -sv09 router_fifo.sv
+elaborate -top router_fifo
 
 clock clk
-reset ~rst_n
+reset rst
