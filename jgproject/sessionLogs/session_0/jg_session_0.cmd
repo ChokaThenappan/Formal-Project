@@ -43,3 +43,80 @@ include fifo_setup.tcl
 prove -bg -all
 include fifo_setup.tcl
 prove -bg -all
+include fifo_setup.tcl
+prove -bg -all
+include fifo_setup.tcl
+prove -bg -all
+include fifo_setup.tcl
+prove -bg -all
+prove -bg -all
+include fifo_setup.tcl
+include fifo_setup.tcl
+prove -bg -all
+visualize -property <embedded>::router_fifo.a_header_valid_coordinates:precondition1 -new_window
+visualize -violation -property <embedded>::router_fifo.a_header_valid_signal -new_window
+include fifo_setup.tcl
+prove -bg -all
+visualize -violation -property <embedded>::router_fifo.a_header_valid_signal -new_window
+include fifo_setup.tcl
+prove -bg -all
+visualize -violation -property <embedded>::router_fifo.a_header_valid_signal -new_window
+include fifo_setup.tcl
+prove -bg -all
+include fifo_setup.tcl
+prove -bg -all
+include fifo_setup.tcl
+prove -bg -all
+include fifo_setup.tcl
+prove -bg -all
+include fifo_setup.tcl
+prove -bg -all
+include fifo_setup.tcl
+include fifo_setup.tcl
+include fifo_setup.tcl
+prove -bg -all
+visualize -violation -property <embedded>::router_fifo.prop_2 -new_window
+visualize -min_length [expr [visualize -get_length -window visualize:0] + 4] -window visualize:0; visualize -freeze [visualize -get_length -window visualize:0] -window visualize:0; visualize -replot -bg -window visualize:0
+visualize -violation -property <embedded>::router_fifo.prop_2 -new_window
+include fifo_setup.tcl
+prove -bg -all
+visualize -violation -property <embedded>::router_fifo.prop_2 -new_window
+include fifo_setup.tcl
+prove -bg -all
+include fifo_setup.tcl
+prove -bg -all
+include fifo_setup.tcl
+prove -bg -all
+visualize -violation -property <embedded>::router_fifo.prop_2 -new_window
+include fifo_setup.tcl
+prove -bg -all
+include fifo_setup.tcl
+include fifo_setup.tcl
+prove -bg -all
+include fifo_setup.tcl
+prove -bg -all
+include fifo_setup.tcl
+include fifo_setup.tcl
+prove -bg -all
+include fifo_setup.tcl
+prove -bg -all
+include fifo_setup.tcl
+prove -bg -all
+prove -bg -all
+include fifo_setup.tcl
+prove -bg -all
+include fifo_setup.tcl
+prove -bg -all
+include fifo_setup.tcl
+prove -bg -all
+include fifo_setup.tcl
+prove -bg -all
+include fifo_setup.tcl
+prove -bg -all
+visualize -violation -property <embedded>::router_fifo.prop_7 -new_window
+include fifo_setup.tcl
+prove -bg -all
+prove -bg -all
+include fifo_setup.tcl
+include fifo_setup.tcl
+prove -bg -all

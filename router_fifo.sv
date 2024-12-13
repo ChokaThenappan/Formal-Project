@@ -28,7 +28,7 @@ module router_fifo
   #(
     parameter bit BypassEnable = 1'b1,
     parameter int unsigned Depth = 4,
-    parameter int unsigned Width = 8
+    parameter int unsigned Width = 66
     )
   (
    input logic clk,
@@ -139,10 +139,7 @@ module router_fifo
 	else $error("Fail: Read when FIFO is empty");
 	a_no_write_when_full: assume property (@(posedge clk) disable iff(rst) !(wrreq && full))
 	else $error("Fail: Write when FIFO is full");
-
-// Flit Type
-//HEADER FLIT
-// {01, source[1:0], destination[1:0],  
+// Flit Type 
 	a_header_on_empty: assume property (@(posedge clk) disable iff(rst) empty |-> data_in[Width-1:Width-2] == 2'b10)
 	else $error("Fail: Header flit must enter when FIFO is empty");
 	a_no_header_after_header: assume property (@(posedge clk) disable iff(rst) data_in[Width-1:Width-2] == 2'b10 |-> ##1 !(data_in[Width-1:Width-2] == 2'b10))
@@ -151,21 +148,44 @@ module router_fifo
 	else $error("Fail: Tail flit followed by body or tail flit");
 	a_no_body_after_header: assume property (@(posedge clk) disable iff(rst) data_in[Width-1:Width-2] == 2'b10 |-> ##1 !(data_in[Width-1:Width-2] == 2'b00))
 	else $error("Fail: Body flit cannot follow header flit");
-
  // Header Checks
-	/*a_header_one_routing_direction: assume property (@(posedge clk) disable iff(rst) data_in[Width-1:Width-2] == 2'b10 |-> $onehot(data_in[3:0]))
+	a_header_one_routing_direction: assume property (@(posedge clk) disable iff(rst) data_in[Width-1:Width-2] == 2'b10 |-> $onehot(data_in[3:0]))
 	else $error("Fail: Header flit with multiple routing directions");
-	a_header_valid_coordinates: assume property (@(posedge clk) disable iff(rst) data_in[Width-1:Width-2] == 2'b10 |-> data_in[7:6] != data_in[5:4] && data_in[5:4] < 3 && data_in[7:6] < 3)
+	a_header_valid_coordinates: assume property (@(posedge clk) disable iff(rst) data_in[Width-1:Width-2] == 2'b10 |-> data_in[Width-3:Width-5] != data_in[Width-6:Width-8] && data_in[Width-6:Width-8] < 3 && data_in[Width-3:Width-5] < 3)
 	else $error("Fail: Invalid source or destination coordinates");
 	a_header_valid_signal: assume property (@(posedge clk) disable iff(rst) data_in[Width-1:Width-2] == 2'b10 |-> wrreq)
 	else $error("Fail: Header flit must have valid signal high");
-	a_header_valid_message_type: assume property (@(posedge clk) disable iff(rst) data_in[Width-1:Width-2] == 2'b10 |-> data_in[Width-3:Width-4] != 2'b11)
-	else $error("Fail: Invalid message type for header");
-
 // Latency Insensitive Design
-	a_no_write_when_void: assume property (@(posedge clk) disable iff(rst) !(wrreq && empty))
-	else $error("Fail: Invalid Write");*/
+	a_no_write_when_void: assume property (@(posedge clk) disable iff(rst) !(wrreq && full))
+	else $error("Fail: Invalid Write");
+// -----------------------------------------------------------------------------------------
+//Assert properties
+	prop_1: assert property (@(posedge clk) disable iff(rst) !(full && empty))
+	else $error("Error: Full and Empty is high at the same time");
+
+	prop_2: assert property (@(posedge clk) disable iff(rst) ((valid_write & ~valid_read) && !full) |-> ##1 (used != $past(used)))
+	else $error("Error: Write did not increment used count");
+
+	prop_3: assert property (@(posedge clk) disable iff(rst) ((~valid_write & valid_read) && !empty) |-> ##1 (used != $past(used)))
+	else $error("Error: Read did not decrement used count");
+
+	prop_4: assert property (@(posedge clk) disable iff(rst) full |-> (used[Depth] == 1'b1))
+	else $error("Error: Full flag not set correctly");
+
+	prop_5: assert property (@(posedge clk) disable iff(rst) empty |-> (used[0] == 1'b1))
+	else $error("Error: Empty flag not set correctly");
+
+	prop_6: assert property (@(posedge clk) disable iff(rst) used[Depth:1] != '1)
+	else $error("Error: FIFO overflow detected");
+
+	prop_7: assert property (@(posedge clk) disable iff(rst) used[Depth:0] != '0)
+	else $error("Error: FIFO underflow detected");
+
+	prop_8: assert property (@(posedge clk) disable iff(rst) $onehot(used[Depth:0]))
+	else $error("Error: Used is not onehot");
 // **************************************************************************************
+
+
 // pragma coverage on
 //VCS coverage on
 `endif // ~SYNTHESIS

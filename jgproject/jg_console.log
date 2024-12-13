@@ -136,3 +136,211 @@
 2024-12-13 13:40:02.110164 (378637) lic__man INFO    Claim 'fpv' for 'session_0/prove-0'.
 2024-12-13 13:40:02.546461 (378637) lic__man INFO    Unclaim everything for 'session_0/prove-0'.
 2024-12-13 13:48:02.682264 (378637) lic__man INFO    Entering idle state.
+2024-12-13 14:27:15.053120 (378637) lic__man INFO    Leaving idle state.
+2024-12-13 14:27:17.710087 (378637) main____ INFO    Releasing console memory by request of analysis session 'session_0'.
+2024-12-13 14:27:17.710477 (378637) lic__man INFO    Unclaim everything for 'session_0'.
+2024-12-13 14:27:18.466918 (378637) lic__man INFO    Unclaim everything for 'session_0'.
+2024-12-13 14:27:19.176873 (378637) lic__man INFO    Claim 'fpv' for 'session_0'.
+2024-12-13 14:27:19.176915 (378637) lic__man INFO    Claim 'fpv' for 'session_0/prove-0'.
+2024-12-13 14:27:19.629584 (378637) lic__man INFO    Unclaim everything for 'session_0/prove-0'.
+2024-12-13 14:35:19.682819 (378637) lic__man INFO    Entering idle state.
+2024-12-13 15:11:23.874041 (378637) lic__man INFO    Leaving idle state.
+2024-12-13 15:11:24.163549 (378637) main____ INFO    Releasing console memory by request of analysis session 'session_0'.
+2024-12-13 15:11:24.163955 (378637) lic__man INFO    Unclaim everything for 'session_0'.
+2024-12-13 15:11:24.914286 (378637) lic__man INFO    Unclaim everything for 'session_0'.
+2024-12-13 15:11:25.949337 (378637) lic__man INFO    Claim 'fpv' for 'session_0'.
+2024-12-13 15:11:25.949387 (378637) lic__man INFO    Claim 'fpv' for 'session_0/prove-0'.
+2024-12-13 15:11:26.399352 (378637) lic__man INFO    Unclaim everything for 'session_0/prove-0'.
+2024-12-13 15:11:30.032641 (378637) main____ INFO    Releasing console memory by request of analysis session 'session_0'.
+2024-12-13 15:11:30.039025 (378637) lic__man INFO    Unclaim everything for 'session_0'.
+2024-12-13 15:11:30.715434 (378637) lic__man INFO    Unclaim everything for 'session_0'.
+2024-12-13 15:11:32.953636 (378637) lic__man INFO    Claim 'fpv' for 'session_0'.
+2024-12-13 15:11:32.953670 (378637) lic__man INFO    Claim 'fpv' for 'session_0/prove-0'.
+2024-12-13 15:11:33.313407 (378637) lic__man INFO    Unclaim everything for 'session_0/prove-0'.
+2024-12-13 15:12:26.072201 (378637) lic__man INFO    Claim 'fpv' for 'session_0'.
+2024-12-13 15:12:26.072278 (378637) lic__man INFO    Claim 'fpv' for 'session_0/prove-1'.
+2024-12-13 15:12:26.118846 (378637) lic__man INFO    Unclaim everything for 'session_0/prove-1'.
+2024-12-13 15:12:30.726294 (378637) main____ INFO    Releasing console memory by request of analysis session 'session_0'.
+2024-12-13 15:12:30.726966 (378637) lic__man INFO    Unclaim everything for 'session_0'.
+2024-12-13 15:12:41.812657 (378637) main____ INFO    Releasing console memory by request of analysis session 'session_0'.
+2024-12-13 15:12:41.812705 (378637) lic__man INFO    Unclaim everything for 'session_0'.
+2024-12-13 15:12:42.528478 (378637) lic__man INFO    Unclaim everything for 'session_0'.
+2024-12-13 15:12:44.223987 (378637) lic__man INFO    Claim 'fpv' for 'session_0'.
+2024-12-13 15:12:44.224028 (378637) lic__man INFO    Claim 'fpv' for 'session_0/prove-0'.
+2024-12-13 15:12:44.619031 (378637) lic__man INFO    Unclaim everything for 'session_0/prove-0'.
+2024-12-13 15:12:46.964671 (378637) lic__man INFO    Claim 'fpv' for 'session_0'.
+2024-12-13 15:13:04.938635 (378637) main____ INFO    Releasing console memory by request of analysis session 'session_0'.
+2024-12-13 15:13:04.940134 (378637) lic__man INFO    Unclaim everything for 'session_0'.
+2024-12-13 15:13:05.626083 (378637) lic__man INFO    Unclaim everything for 'session_0'.
+2024-12-13 15:13:06.296326 (378637) lic__man INFO    Claim 'fpv' for 'session_0'.
+2024-12-13 15:13:06.296364 (378637) lic__man INFO    Claim 'fpv' for 'session_0/prove-0'.
+2024-12-13 15:13:06.705441 (378637) lic__man INFO    Unclaim everything for 'session_0/prove-0'.
+2024-12-13 15:13:08.290640 (378637) lic__man INFO    Claim 'fpv' for 'session_0'.
+2024-12-13 15:13:27.510977 (378637) main____ INFO    Releasing console memory by request of analysis session 'session_0'.
+2024-12-13 15:13:27.511133 (378637) lic__man INFO    Unclaim everything for 'session_0'.
+2024-12-13 15:13:28.234883 (378637) lic__man INFO    Unclaim everything for 'session_0'.
+2024-12-13 15:13:30.694793 (378637) lic__man INFO    Claim 'fpv' for 'session_0'.
+2024-12-13 15:13:30.694835 (378637) lic__man INFO    Claim 'fpv' for 'session_0/prove-0'.
+2024-12-13 15:13:31.098929 (378637) lic__man INFO    Unclaim everything for 'session_0/prove-0'.
+2024-12-13 15:13:32.589913 (378637) lic__man INFO    Claim 'fpv' for 'session_0'.
+2024-12-13 15:14:24.292513 (378637) main____ INFO    Releasing console memory by request of analysis session 'session_0'.
+2024-12-13 15:14:24.292697 (378637) lic__man INFO    Unclaim everything for 'session_0'.
+2024-12-13 15:14:25.081558 (378637) lic__man INFO    Unclaim everything for 'session_0'.
+2024-12-13 15:14:25.735986 (378637) lic__man INFO    Claim 'fpv' for 'session_0'.
+2024-12-13 15:14:25.736020 (378637) lic__man INFO    Claim 'fpv' for 'session_0/prove-0'.
+2024-12-13 15:14:26.122823 (378637) lic__man INFO    Unclaim everything for 'session_0/prove-0'.
+2024-12-13 15:22:20.122049 (378637) main____ INFO    Releasing console memory by request of analysis session 'session_0'.
+2024-12-13 15:22:20.122157 (378637) lic__man INFO    Unclaim everything for 'session_0'.
+2024-12-13 15:22:21.178609 (378637) lic__man INFO    Unclaim everything for 'session_0'.
+2024-12-13 15:22:23.740119 (378637) lic__man INFO    Claim 'fpv' for 'session_0'.
+2024-12-13 15:22:23.740156 (378637) lic__man INFO    Claim 'fpv' for 'session_0/prove-0'.
+2024-12-13 15:22:23.961737 (378637) lic__man INFO    Unclaim everything for 'session_0/prove-0'.
+2024-12-13 15:22:55.635513 (378637) main____ INFO    Releasing console memory by request of analysis session 'session_0'.
+2024-12-13 15:22:55.636173 (378637) lic__man INFO    Unclaim everything for 'session_0'.
+2024-12-13 15:22:56.437012 (378637) lic__man INFO    Unclaim everything for 'session_0'.
+2024-12-13 15:22:57.957884 (378637) lic__man INFO    Claim 'fpv' for 'session_0'.
+2024-12-13 15:22:57.957920 (378637) lic__man INFO    Claim 'fpv' for 'session_0/prove-0'.
+2024-12-13 15:22:58.447859 (378637) lic__man INFO    Unclaim everything for 'session_0/prove-0'.
+2024-12-13 15:23:03.722708 (378637) main____ INFO    Releasing console memory by request of analysis session 'session_0'.
+2024-12-13 15:23:03.723470 (378637) lic__man INFO    Unclaim everything for 'session_0'.
+2024-12-13 15:23:04.425467 (378637) lic__man INFO    Unclaim everything for 'session_0'.
+2024-12-13 15:23:08.435926 (378637) lic__man INFO    Claim 'fpv' for 'session_0'.
+2024-12-13 15:23:08.435973 (378637) lic__man INFO    Claim 'fpv' for 'session_0/prove-0'.
+2024-12-13 15:23:08.939136 (378637) lic__man INFO    Unclaim everything for 'session_0/prove-0'.
+2024-12-13 15:26:15.661497 (378637) main____ INFO    Releasing console memory by request of analysis session 'session_0'.
+2024-12-13 15:26:15.661953 (378637) lic__man INFO    Unclaim everything for 'session_0'.
+2024-12-13 15:26:16.447580 (378637) lic__man INFO    Unclaim everything for 'session_0'.
+2024-12-13 15:26:19.087554 (378637) lic__man INFO    Claim 'fpv' for 'session_0'.
+2024-12-13 15:26:19.087587 (378637) lic__man INFO    Claim 'fpv' for 'session_0/prove-0'.
+2024-12-13 15:26:19.518717 (378637) lic__man INFO    Unclaim everything for 'session_0/prove-0'.
+2024-12-13 15:28:26.510364 (378637) main____ INFO    Releasing console memory by request of analysis session 'session_0'.
+2024-12-13 15:28:26.510713 (378637) lic__man INFO    Unclaim everything for 'session_0'.
+2024-12-13 15:28:49.076438 (378637) main____ INFO    Releasing console memory by request of analysis session 'session_0'.
+2024-12-13 15:28:49.076474 (378637) lic__man INFO    Unclaim everything for 'session_0'.
+2024-12-13 15:28:56.706098 (378637) main____ INFO    Releasing console memory by request of analysis session 'session_0'.
+2024-12-13 15:28:56.706134 (378637) lic__man INFO    Unclaim everything for 'session_0'.
+2024-12-13 15:28:57.412345 (378637) lic__man INFO    Unclaim everything for 'session_0'.
+2024-12-13 15:29:00.033214 (378637) lic__man INFO    Claim 'fpv' for 'session_0'.
+2024-12-13 15:29:00.033248 (378637) lic__man INFO    Claim 'fpv' for 'session_0/prove-0'.
+2024-12-13 15:29:00.415890 (378637) lic__man INFO    Unclaim everything for 'session_0/prove-0'.
+2024-12-13 15:29:03.112000 (378637) lic__man INFO    Claim 'fpv' for 'session_0'.
+2024-12-13 15:31:25.508130 (378637) lic__man INFO    Claim 'fpv' for 'session_0'.
+2024-12-13 15:31:25.508167 (378637) lic__man INFO    Claim 'fpv' for 'session_0/prove-1'.
+2024-12-13 15:31:25.769411 (378637) lic__man INFO    Unclaim everything for 'session_0/prove-1'.
+2024-12-13 15:33:06.099181 (378637) main____ INFO    Releasing console memory by request of analysis session 'session_0'.
+2024-12-13 15:33:06.099505 (378637) lic__man INFO    Unclaim everything for 'session_0'.
+2024-12-13 15:33:06.847488 (378637) lic__man INFO    Unclaim everything for 'session_0'.
+2024-12-13 15:33:07.853328 (378637) lic__man INFO    Claim 'fpv' for 'session_0'.
+2024-12-13 15:33:07.853365 (378637) lic__man INFO    Claim 'fpv' for 'session_0/prove-0'.
+2024-12-13 15:33:08.254549 (378637) lic__man INFO    Unclaim everything for 'session_0/prove-0'.
+2024-12-13 15:33:10.574085 (378637) lic__man INFO    Claim 'fpv' for 'session_0'.
+2024-12-13 15:33:40.173555 (378637) main____ INFO    Releasing console memory by request of analysis session 'session_0'.
+2024-12-13 15:33:40.174382 (378637) lic__man INFO    Unclaim everything for 'session_0'.
+2024-12-13 15:33:40.898819 (378637) lic__man INFO    Unclaim everything for 'session_0'.
+2024-12-13 15:33:47.525144 (378637) lic__man INFO    Claim 'fpv' for 'session_0'.
+2024-12-13 15:33:47.525183 (378637) lic__man INFO    Claim 'fpv' for 'session_0/prove-0'.
+2024-12-13 15:33:47.957876 (378637) lic__man INFO    Unclaim everything for 'session_0/prove-0'.
+2024-12-13 15:35:14.513546 (378637) main____ INFO    Releasing console memory by request of analysis session 'session_0'.
+2024-12-13 15:35:14.514193 (378637) lic__man INFO    Unclaim everything for 'session_0'.
+2024-12-13 15:35:15.375319 (378637) lic__man INFO    Unclaim everything for 'session_0'.
+2024-12-13 15:35:16.100226 (378637) lic__man INFO    Claim 'fpv' for 'session_0'.
+2024-12-13 15:35:16.100277 (378637) lic__man INFO    Claim 'fpv' for 'session_0/prove-0'.
+2024-12-13 15:35:16.565095 (378637) lic__man INFO    Unclaim everything for 'session_0/prove-0'.
+2024-12-13 15:36:59.000869 (378637) main____ INFO    Releasing console memory by request of analysis session 'session_0'.
+2024-12-13 15:36:59.001030 (378637) lic__man INFO    Unclaim everything for 'session_0'.
+2024-12-13 15:37:00.201064 (378637) lic__man INFO    Unclaim everything for 'session_0'.
+2024-12-13 15:37:01.963243 (378637) lic__man INFO    Claim 'fpv' for 'session_0'.
+2024-12-13 15:37:01.963278 (378637) lic__man INFO    Claim 'fpv' for 'session_0/prove-0'.
+2024-12-13 15:37:02.490418 (378637) lic__man INFO    Unclaim everything for 'session_0/prove-0'.
+2024-12-13 15:37:04.223777 (378637) lic__man INFO    Claim 'fpv' for 'session_0'.
+2024-12-13 15:39:03.350483 (378637) main____ INFO    Releasing console memory by request of analysis session 'session_0'.
+2024-12-13 15:39:03.350725 (378637) lic__man INFO    Unclaim everything for 'session_0'.
+2024-12-13 15:39:04.152521 (378637) lic__man INFO    Unclaim everything for 'session_0'.
+2024-12-13 15:39:06.207221 (378637) lic__man INFO    Claim 'fpv' for 'session_0'.
+2024-12-13 15:39:06.207255 (378637) lic__man INFO    Claim 'fpv' for 'session_0/prove-0'.
+2024-12-13 15:39:06.666059 (378637) lic__man INFO    Unclaim everything for 'session_0/prove-0'.
+2024-12-13 15:40:46.480345 (378637) main____ INFO    Releasing console memory by request of analysis session 'session_0'.
+2024-12-13 15:40:46.480795 (378637) lic__man INFO    Unclaim everything for 'session_0'.
+2024-12-13 15:41:02.175785 (378637) main____ INFO    Releasing console memory by request of analysis session 'session_0'.
+2024-12-13 15:41:02.175828 (378637) lic__man INFO    Unclaim everything for 'session_0'.
+2024-12-13 15:41:02.890630 (378637) lic__man INFO    Unclaim everything for 'session_0'.
+2024-12-13 15:41:05.597989 (378637) lic__man INFO    Claim 'fpv' for 'session_0'.
+2024-12-13 15:41:05.598027 (378637) lic__man INFO    Claim 'fpv' for 'session_0/prove-0'.
+2024-12-13 15:41:06.074997 (378637) lic__man INFO    Unclaim everything for 'session_0/prove-0'.
+2024-12-13 15:43:19.725872 (378637) main____ INFO    Releasing console memory by request of analysis session 'session_0'.
+2024-12-13 15:43:19.726318 (378637) lic__man INFO    Unclaim everything for 'session_0'.
+2024-12-13 15:43:20.515892 (378637) lic__man INFO    Unclaim everything for 'session_0'.
+2024-12-13 15:43:21.344020 (378637) lic__man INFO    Claim 'fpv' for 'session_0'.
+2024-12-13 15:43:21.344057 (378637) lic__man INFO    Claim 'fpv' for 'session_0/prove-0'.
+2024-12-13 15:43:21.843657 (378637) lic__man INFO    Unclaim everything for 'session_0/prove-0'.
+2024-12-13 15:46:31.369987 (378637) main____ INFO    Releasing console memory by request of analysis session 'session_0'.
+2024-12-13 15:46:31.370466 (378637) lic__man INFO    Unclaim everything for 'session_0'.
+2024-12-13 15:46:42.844838 (378637) main____ INFO    Releasing console memory by request of analysis session 'session_0'.
+2024-12-13 15:46:42.844877 (378637) lic__man INFO    Unclaim everything for 'session_0'.
+2024-12-13 15:46:43.540965 (378637) lic__man INFO    Unclaim everything for 'session_0'.
+2024-12-13 15:46:44.773071 (378637) lic__man INFO    Claim 'fpv' for 'session_0'.
+2024-12-13 15:46:44.773108 (378637) lic__man INFO    Claim 'fpv' for 'session_0/prove-0'.
+2024-12-13 15:46:45.255465 (378637) lic__man INFO    Unclaim everything for 'session_0/prove-0'.
+2024-12-13 15:48:36.709436 (378637) main____ INFO    Releasing console memory by request of analysis session 'session_0'.
+2024-12-13 15:48:36.709899 (378637) lic__man INFO    Unclaim everything for 'session_0'.
+2024-12-13 15:48:37.602854 (378637) lic__man INFO    Unclaim everything for 'session_0'.
+2024-12-13 15:48:39.374087 (378637) lic__man INFO    Claim 'fpv' for 'session_0'.
+2024-12-13 15:48:39.374121 (378637) lic__man INFO    Claim 'fpv' for 'session_0/prove-0'.
+2024-12-13 15:48:39.854564 (378637) lic__man INFO    Unclaim everything for 'session_0/prove-0'.
+2024-12-13 15:48:53.491567 (378637) main____ INFO    Releasing console memory by request of analysis session 'session_0'.
+2024-12-13 15:48:53.492445 (378637) lic__man INFO    Unclaim everything for 'session_0'.
+2024-12-13 15:48:54.206088 (378637) lic__man INFO    Unclaim everything for 'session_0'.
+2024-12-13 15:48:57.165213 (378637) lic__man INFO    Claim 'fpv' for 'session_0'.
+2024-12-13 15:48:57.165255 (378637) lic__man INFO    Claim 'fpv' for 'session_0/prove-0'.
+2024-12-13 15:48:57.647837 (378637) lic__man INFO    Unclaim everything for 'session_0/prove-0'.
+2024-12-13 15:49:19.819238 (378637) lic__man INFO    Claim 'fpv' for 'session_0'.
+2024-12-13 15:49:19.819298 (378637) lic__man INFO    Claim 'fpv' for 'session_0/prove-1'.
+2024-12-13 15:49:19.865237 (378637) lic__man INFO    Unclaim everything for 'session_0/prove-1'.
+2024-12-13 15:49:22.392086 (378637) main____ INFO    Releasing console memory by request of analysis session 'session_0'.
+2024-12-13 15:49:22.392849 (378637) lic__man INFO    Unclaim everything for 'session_0'.
+2024-12-13 15:49:23.192133 (378637) lic__man INFO    Unclaim everything for 'session_0'.
+2024-12-13 15:49:23.763464 (378637) lic__man INFO    Claim 'fpv' for 'session_0'.
+2024-12-13 15:49:23.763500 (378637) lic__man INFO    Claim 'fpv' for 'session_0/prove-0'.
+2024-12-13 15:49:24.262647 (378637) lic__man INFO    Unclaim everything for 'session_0/prove-0'.
+2024-12-13 15:50:04.247830 (378637) main____ INFO    Releasing console memory by request of analysis session 'session_0'.
+2024-12-13 15:50:04.248265 (378637) lic__man INFO    Unclaim everything for 'session_0'.
+2024-12-13 15:50:05.030151 (378637) lic__man INFO    Unclaim everything for 'session_0'.
+2024-12-13 15:50:05.747279 (378637) lic__man INFO    Claim 'fpv' for 'session_0'.
+2024-12-13 15:50:05.747314 (378637) lic__man INFO    Claim 'fpv' for 'session_0/prove-0'.
+2024-12-13 15:50:06.232691 (378637) lic__man INFO    Unclaim everything for 'session_0/prove-0'.
+2024-12-13 15:51:17.945502 (378637) main____ INFO    Releasing console memory by request of analysis session 'session_0'.
+2024-12-13 15:51:17.945943 (378637) lic__man INFO    Unclaim everything for 'session_0'.
+2024-12-13 15:51:18.757524 (378637) lic__man INFO    Unclaim everything for 'session_0'.
+2024-12-13 15:51:19.665030 (378637) lic__man INFO    Claim 'fpv' for 'session_0'.
+2024-12-13 15:51:19.665071 (378637) lic__man INFO    Claim 'fpv' for 'session_0/prove-0'.
+2024-12-13 15:51:20.197378 (378637) lic__man INFO    Unclaim everything for 'session_0/prove-0'.
+2024-12-13 15:53:31.575222 (378637) main____ INFO    Releasing console memory by request of analysis session 'session_0'.
+2024-12-13 15:53:31.575594 (378637) lic__man INFO    Unclaim everything for 'session_0'.
+2024-12-13 15:53:32.319870 (378637) lic__man INFO    Unclaim everything for 'session_0'.
+2024-12-13 15:53:34.748002 (378637) lic__man INFO    Claim 'fpv' for 'session_0'.
+2024-12-13 15:53:34.748036 (378637) lic__man INFO    Claim 'fpv' for 'session_0/prove-0'.
+2024-12-13 15:53:35.244302 (378637) lic__man INFO    Unclaim everything for 'session_0/prove-0'.
+2024-12-13 15:54:38.782158 (378637) main____ INFO    Releasing console memory by request of analysis session 'session_0'.
+2024-12-13 15:54:38.782599 (378637) lic__man INFO    Unclaim everything for 'session_0'.
+2024-12-13 15:54:39.540463 (378637) lic__man INFO    Unclaim everything for 'session_0'.
+2024-12-13 15:54:40.292042 (378637) lic__man INFO    Claim 'fpv' for 'session_0'.
+2024-12-13 15:54:40.292078 (378637) lic__man INFO    Claim 'fpv' for 'session_0/prove-0'.
+2024-12-13 15:54:40.791009 (378637) lic__man INFO    Unclaim everything for 'session_0/prove-0'.
+2024-12-13 15:54:42.985445 (378637) lic__man INFO    Claim 'fpv' for 'session_0'.
+2024-12-13 15:57:23.394454 (378637) main____ INFO    Releasing console memory by request of analysis session 'session_0'.
+2024-12-13 15:57:23.395411 (378637) lic__man INFO    Unclaim everything for 'session_0'.
+2024-12-13 15:57:24.133329 (378637) lic__man INFO    Unclaim everything for 'session_0'.
+2024-12-13 15:57:24.738849 (378637) lic__man INFO    Claim 'fpv' for 'session_0'.
+2024-12-13 15:57:24.738882 (378637) lic__man INFO    Claim 'fpv' for 'session_0/prove-0'.
+2024-12-13 15:57:25.229208 (378637) lic__man INFO    Unclaim everything for 'session_0/prove-0'.
+2024-12-13 15:57:27.175356 (378637) lic__man INFO    Claim 'fpv' for 'session_0'.
+2024-12-13 15:57:27.175405 (378637) lic__man INFO    Claim 'fpv' for 'session_0/prove-1'.
+2024-12-13 15:57:27.219073 (378637) lic__man INFO    Unclaim everything for 'session_0/prove-1'.
+2024-12-13 15:58:40.921305 (378637) main____ INFO    Releasing console memory by request of analysis session 'session_0'.
+2024-12-13 15:58:40.921683 (378637) lic__man INFO    Unclaim everything for 'session_0'.
+2024-12-13 15:58:54.556957 (378637) main____ INFO    Releasing console memory by request of analysis session 'session_0'.
+2024-12-13 15:58:54.557012 (378637) lic__man INFO    Unclaim everything for 'session_0'.
+2024-12-13 15:58:55.383240 (378637) lic__man INFO    Unclaim everything for 'session_0'.
+2024-12-13 15:58:57.033017 (378637) lic__man INFO    Claim 'fpv' for 'session_0'.
+2024-12-13 15:58:57.033051 (378637) lic__man INFO    Claim 'fpv' for 'session_0/prove-0'.
+2024-12-13 15:58:57.599009 (378637) lic__man INFO    Unclaim everything for 'session_0/prove-0'.
