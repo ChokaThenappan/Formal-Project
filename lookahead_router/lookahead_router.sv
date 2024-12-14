@@ -482,6 +482,39 @@ else $error("Error: Body/tail flit data mismatch between FIFO and crossbar outpu
         end
       end
 
+// **************************************************************************************
+// Properties defined for Formal Verification - CSEE 6863
+`ifndef SYNTHESIS
+
+// Latency Insensitive Design Assertion 1: If output backpressured, the router
+// does not read the input FIFO
+fifo_stall: assert property (@(posedge clk) disable iff (rst) (~no_backpressure[g_i] && forwarding_in_progress[g_i] && ~out_unvalid_flit[g_i]) |-> ((|rd_fifo[g_i])==1'b0)) 
+else $error("Error: Output Reg incorrectly saved the crossbar data");
+
+// Latency Insensitive Design Assertion 2: If output backpressured, the output
+// reg's value does not change
+bp_last_flit: assert property (@(posedge clk) disable iff (rst) (FifoBypassEnable && ~no_backpressure[g_i] && forwarding_in_progress[g_i] && ~out_unvalid_flit[g_i]) |-> ##1 (last_flit[g_i]==$past(last_flit[g_i]))) 
+else $error("Error: Output Reg incorrectly saved the crossbar data");
+
+// Latency Insensitive Design Assertion 3: If output not backpressured, the router
+// saves the crossbar output to the output register
+no_bp_last_flit: assert property (@(posedge clk) disable iff (rst) (FifoBypassEnable && no_backpressure[g_i] && forwarding_in_progress[g_i] && ~out_unvalid_flit[g_i]) |-> ##1 (last_flit[g_i]==$past(data_out_crossbar[g_i]))) 
+else $error("Error: Output Reg did not save the crossbar data");
+
+// Latency Insensitive Design Assertion 4: If output not forwarding and there is no backpressure, void
+// out
+no_fwd_no_bp_void: assert property (@(posedge clk) disable iff (rst) (FifoBypassEnable && !forwarding_in_progress[g_i] && no_backpressure[g_i]) |-> ##1 (data_void_out[g_i]))
+else $error("Error: Data void out isn't 1 when no forwarding and no backpressure");
+
+// Latency Insensitive Design Assertion 5: If output forwarding and there is no backpressure, void
+// out is void_in at input
+fwd_no_bp_void: assert property (@(posedge clk) disable iff (rst) (FifoBypassEnable && forwarding_in_progress[g_i] && no_backpressure[g_i]) |-> ##1 (data_void_out[g_i]==$past(out_unvalid_flit[g_i]))) 
+else $error("Error: Data void out isn't 1 when no forwarding and no backpressure");
+
+`endif // ~SYNTHESIS
+
+// **************************************************************************************
+
 
 
     end  else begin : gen_input_port_disabled
