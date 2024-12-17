@@ -140,24 +140,24 @@ module router_fifo
 	a_no_write_when_full: assume property (@(posedge clk) disable iff(rst) !(wrreq && full))
 	else $error("Fail: Write when FIFO is full");
 // Flit Type 
-	a_header_on_empty: assume property (@(posedge clk) disable iff(rst) empty |-> data_in[Width-1:Width-2] == 2'b10)
-	else $error("Fail: Header flit must enter when FIFO is empty");
-	a_no_header_after_header: assume property (@(posedge clk) disable iff(rst) data_in[Width-1:Width-2] == 2'b10 |-> ##1 !(data_in[Width-1:Width-2] == 2'b10))
-	else $error("Fail: Header flit followed by another header flit");
-	a_no_tail_after_tail_or_body: assume property (@(posedge clk) disable iff(rst) data_in[Width-1:Width-2] == 2'b01 |-> ##1 !(data_in[Width-1:Width-2] == 2'b01 || data_in[Width-1:Width-2] == 2'b00))
-	else $error("Fail: Tail flit followed by body or tail flit");
-	a_no_body_after_header: assume property (@(posedge clk) disable iff(rst) data_in[Width-1:Width-2] == 2'b10 |-> ##1 !(data_in[Width-1:Width-2] == 2'b00))
-	else $error("Fail: Body flit cannot follow header flit");
+//	a_header_on_empty: assume property (@(posedge clk) disable iff(rst) empty |-> data_in[Width-1:Width-2] == 2'b10)
+//	else $error("Fail: Header flit must enter when FIFO is empty");
+//	a_no_header_after_header: assume property (@(posedge clk) disable iff(rst) data_in[Width-1:Width-2] == 2'b10 |-> ##1 !(data_in[Width-1:Width-2] == 2'b10))
+//	else $error("Fail: Header flit followed by another header flit");
+//	a_no_tail_after_tail_or_body: assume property (@(posedge clk) disable iff(rst) data_in[Width-1:Width-2] == 2'b01 |-> ##1 !(data_in[Width-1:Width-2] == 2'b01 || data_in[Width-1:Width-2] == 2'b00))
+//	else $error("Fail: Tail flit followed by body or tail flit");
+//	a_no_body_after_header: assume property (@(posedge clk) disable iff(rst) data_in[Width-1:Width-2] == 2'b10 |-> ##1 !(data_in[Width-1:Width-2] == 2'b00))
+//	else $error("Fail: Body flit cannot follow header flit");
  // Header Checks
-	a_header_one_routing_direction: assume property (@(posedge clk) disable iff(rst) data_in[Width-1:Width-2] == 2'b10 |-> $onehot(data_in[3:0]))
-	else $error("Fail: Header flit with multiple routing directions");
-	a_header_valid_coordinates: assume property (@(posedge clk) disable iff(rst) data_in[Width-1:Width-2] == 2'b10 |-> data_in[Width-3:Width-5] != data_in[Width-6:Width-8] && data_in[Width-6:Width-8] < 3 && data_in[Width-3:Width-5] < 3)
-	else $error("Fail: Invalid source or destination coordinates");
-	a_header_valid_signal: assume property (@(posedge clk) disable iff(rst) data_in[Width-1:Width-2] == 2'b10 |-> wrreq)
-	else $error("Fail: Header flit must have valid signal high");
+//	a_header_one_routing_direction: assume property (@(posedge clk) disable iff(rst) data_in[Width-1:Width-2] == 2'b10 |-> $onehot(data_in[3:0]))
+//	else $error("Fail: Header flit with multiple routing directions");
+//	a_header_valid_coordinates: assume property (@(posedge clk) disable iff(rst) data_in[Width-1:Width-2] == 2'b10 |-> data_in[Width-3:Width-5] != data_in[Width-6:Width-8] && data_in[Width-6:Width-8] < 3 && data_in[Width-3:Width-5] < 3)
+//	else $error("Fail: Invalid source or destination coordinates");
+//	a_header_valid_signal: assume property (@(posedge clk) disable iff(rst) data_in[Width-1:Width-2] == 2'b10 |-> wrreq)
+//	else $error("Fail: Header flit must have valid signal high");
 // Latency Insensitive Design
-	a_no_write_when_void: assume property (@(posedge clk) disable iff(rst) !(wrreq && full))
-	else $error("Fail: Invalid Write");
+//	a_no_write_when_void: assume property (@(posedge clk) disable iff(rst) !(wrreq && full))
+//	else $error("Fail: Invalid Write");
 // -----------------------------------------------------------------------------------------
 //Assert properties
 	prop_1: assert property (@(posedge clk) disable iff(rst) !(full && empty))

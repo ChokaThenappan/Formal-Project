@@ -88,8 +88,8 @@ module lookahead_routing
 `ifndef SYNTHESIS
 // pragma coverage off
 //VCS coverage off
-    a_current_onehot: assume property (@(posedge clk) $onehot0(current_routing))
-      else $error("Fail: a_current_onehot");
+//    a_current_onehot: assume property (@(posedge clk) $onehot0(current_routing))
+//      else $error("Fail: a_current_onehot");
 //    a_current_position_x: assume property (@(posedge clk) ((position.x < 3) && (position.x >= 0)))
 //      else $error("Fail: a_current_position_x");
 //    a_current_position_y: assume property (@(posedge clk) ((position.y < 3) && (position.y >= 0)))
@@ -98,14 +98,14 @@ module lookahead_routing
 //      else $error("Fail: a_destination_x");
 //    a_destination_y: assume property (@(posedge clk) ((destination.y < 3) && (destination.y >= 0)))
 //      else $error("Fail: a_destination_y");
-    a_dest_coordinates_0: assume property (@(posedge clk) (current_routing == noc::goNorth) |-> ((destination.x == next_position_q[noc::kNorthPort].x) && (destination.y <= next_position_q[noc::kNorthPort].y)))
-      else $error("Fail: a_dest_coordinates_0");
-    a_dest_coordinates_1: assume property (@(posedge clk) (current_routing == noc::goSouth) |-> ((destination.x == next_position_q[noc::kSouthPort].x) && (destination.y >= next_position_q[noc::kSouthPort].y)))
-      else $error("Fail: a_dest_coordinates_1");
-    a_dest_coordinates_2: assume property (@(posedge clk) (current_routing == noc::goEast) |-> (destination.x >= next_position_q[noc::kEastPort].x))
-      else $error("Fail: a_dest_coordinates_2");
-    a_dest_coordinates_3: assume property (@(posedge clk) (current_routing == noc::goWest) |-> (destination.x <= next_position_q[noc::kWestPort].x))
-      else $error("Fail: a_dest_coordinates_3");
+//    a_dest_coordinates_0: assume property (@(posedge clk) (current_routing == noc::goNorth) |-> ((destination.x == next_position_q[noc::kNorthPort].x) && (destination.y <= next_position_q[noc::kNorthPort].y)))
+//      else $error("Fail: a_dest_coordinates_0");
+//    a_dest_coordinates_1: assume property (@(posedge clk) (current_routing == noc::goSouth) |-> ((destination.x == next_position_q[noc::kSouthPort].x) && (destination.y >= next_position_q[noc::kSouthPort].y)))
+//      else $error("Fail: a_dest_coordinates_1");
+//    a_dest_coordinates_2: assume property (@(posedge clk) (current_routing == noc::goEast) |-> (destination.x >= next_position_q[noc::kEastPort].x))
+//      else $error("Fail: a_dest_coordinates_2");
+//    a_dest_coordinates_3: assume property (@(posedge clk) (current_routing == noc::goWest) |-> (destination.x <= next_position_q[noc::kWestPort].x))
+//      else $error("Fail: a_dest_coordinates_3");
   
     a_no_request_to_same_port_0: assert property (@(posedge clk) (current_routing == noc::goNorth) |-> (next_routing != noc::goSouth))
       else $error("Fail: a_no_request_to_same_port_0");
@@ -115,7 +115,7 @@ module lookahead_routing
       else $error("Fail: a_no_request_to_same_port_2"); 
     a_no_request_to_same_port_3: assert property (@(posedge clk) (current_routing == noc::goEast) |-> (next_routing != noc::goWest))
       else $error("Fail: a_no_request_to_same_port_3");
-    a_next_routing_one_hot: assert property (@(posedge clk) $onehot0(next_routing))
+    a_next_routing_one_hot: assert property (@(posedge clk) $onehot(next_routing))
       else $error("Fail: next_routing_not_one_hot");
     a_coordinate_0: assert property (@(posedge clk) (current_routing == noc::goNorth) |-> ((next_position_d[noc::kNorthPort].x == position.x) && (next_position_d[noc::kNorthPort].y == position.y - 1'b1)))
       else $error("Fail: position_0_error");
