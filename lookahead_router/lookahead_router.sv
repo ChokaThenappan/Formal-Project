@@ -581,34 +581,57 @@ else $error("Error: Data void out isn't 1 when no forwarding and no backpressure
   end
 
 
-//  a_routing_one_no_req_same_port_0: assume property (@(posedge clk) disable iff (rst) data_in[noc::kNorthPort].header.preamble.head |-> ~data_in[noc::kNorthPort].flit[noc::kNorthPort]);
-//  a_routing_one_no_req_same_port_1: assume property (@(posedge clk) disable iff (rst) data_in[noc::kSouthPort].header.preamble.head |-> ~data_in[noc::kSouthPort].flit[noc::kSouthPort]);
-//  a_routing_one_no_req_same_port_2: assume property (@(posedge clk) disable iff (rst) data_in[noc::kEastPort].header.preamble.head |-> ~data_in[noc::kEastPort].flit[noc::kEastPort]);
-//  a_routing_one_no_req_same_port_3: assume property (@(posedge clk) disable iff (rst) data_in[noc::kWestPort].header.preamble.head |-> ~data_in[noc::kWestPort].flit[noc::kWestPort]);
-//  a_routing_one_no_req_same_port_4: assume property (@(posedge clk) disable iff (rst) data_in[noc::kLocalPort].header.preamble.head |-> ~data_in[noc::kLocalPort].flit[noc::kLocalPort]); 
-
   for (g_i = 0; g_i < 5; g_i++) begin : gen_assert_legal_routing_request
-    a_header_on_kHeadFlit: assume property (@(posedge clk) disable iff(rst) (~data_void_in[g_i] && empty[g_i]) |-> data_in[g_i].header.preamble.head);
-    a_header_or_tail_0: assume property (@(posedge clk) disable iff(rst) (~data_void_in[g_i] && data_in[g_i].header.preamble.head) |-> ~data_in[g_i].header.preamble.tail);
-    a_header_or_tail_1: assume property (@(posedge clk) disable iff(rst) (~data_void_in[g_i] && data_in[g_i].header.preamble.tail) |-> ~data_in[g_i].header.preamble.head);
-    a_header_head_not_followed_by_head: assume property (@(posedge clk) disable iff(rst) (data_in[g_i].header.preamble.head && ~data_void_in[g_i] && ~stop_out[g_i]) |=>  ~data_in[g_i].header.preamble.head);
-    a_header_tail_followed_by_head: assume property (@(posedge clk) disable iff(rst) (data_in[g_i].header.preamble.tail && ~data_void_in[g_i] && ~stop_out[g_i]) |=> data_in[g_i].header.preamble.head);
-    a_header_body_followed_by_tail: assume property (@(posedge clk) disable iff(rst) (~data_in[g_i].header.preamble.head && ~data_in[g_i].header.preamble.tail && ~data_void_in[g_i] && ~stop_out[g_i]) |=> data_in[g_i].header.preamble.tail);
-
+    a_header_on_kHeadFlit: assume property (@(posedge clk) disable iff(rst) (final_routing_request=='0) |-> data_in[g_i].header.preamble.head);
+    a_initial_flit_head: assume property (
+        @(posedge clk)
+        disable iff (rst)
+        ($past(rst) && !rst) |->
+          (data_void_in[g_i] || data_in[g_i].header.preamble.head)
+      );
+    a_no_body_before_head: assume property (
+      @(posedge clk)
+      disable iff (rst)
+      (!data_void_in[g_i] && !data_in[g_i].header.preamble.head && !data_in[g_i].header.preamble.tail) |->
+        $past(data_in[g_i].header.preamble.head)
+    );
+    a_no_tail_before_head: assume property (
+      @(posedge clk)
+      disable iff (rst)
+      (data_in[g_i].header.preamble.tail) |-> 
+        $past(data_in[g_i].header.preamble.head)
+      );    
+//    a_header_on_kHeadFlit: assume property (@(posedge clk) disable iff(rst) (~data_void_in[g_i] && empty[g_i]) |-> data_in[g_i].header.preamble.head);
+    a_header_or_tail_0: assume property (@(posedge clk) disable iff(rst) (data_in[g_i].header.preamble.head) |-> ~data_in[g_i].header.preamble.tail);
+    a_header_or_tail_1: assume property (@(posedge clk) disable iff(rst) (data_in[g_i].header.preamble.tail) |-> ~data_in[g_i].header.preamble.head);
+    a_header_head_not_followed_by_head: assume property (@(posedge clk) disable iff(rst) (data_in[g_i].header.preamble.head) |=>  ~data_in[g_i].header.preamble.head);
+    a_header_tail_followed_by_head: assume property (@(posedge clk) disable iff(rst) (data_in[g_i].header.preamble.tail) |=> data_in[g_i].header.preamble.head);
+    a_header_body_followed_by_tail: assume property (@(posedge clk) disable iff(rst) (~data_in[g_i].header.preamble.head && ~data_in[g_i].header.preamble.tail) |=> data_in[g_i].header.preamble.tail);
     a_routing_one_hot: assume property (@(posedge clk) disable iff (rst) (data_in[g_i].header.preamble.head) |-> $onehot(data_in[g_i].header.routing));
-    a_routing_one_no_req_same_port: assume property (@(posedge clk) disable iff (rst) data_in[g_i].header.preamble.head |-> ~data_in[g_i].header.routing[g_i]);
-    a_src_dest_not_equal: assume property (@(posedge clk) disable iff (rst) (~data_void_in[g_i] && data_in[g_i].header.preamble.head) |-> (~((data_in[g_i].header.info.source.x == data_in[g_i].header.info.destination.x) && (data_in[g_i].header.info.source.y == data_in[g_i].header.info.destination.y)))); 
-    a_routing: assume property (@(posedge clk) disable iff (rst) data_in[g_i].header.preamble.head |-> 
-	    ((position.x == data_in[g_i].header.info.destination.x) && (position.y == data_in[g_i].header.info.destination.y) && (data_in[g_i].header.routing == 5'b10000)) ||
+    a_routing_one_no_req_same_port: assume property (@(posedge clk) disable iff (rst) (data_in[g_i].header.preamble.head) |-> ~data_in[g_i].header.routing[g_i]);
+    a_src_dest_not_equal: assume property (@(posedge clk) disable iff (rst) (data_in[g_i].header.preamble.head) |-> (!((data_in[g_i].header.info.source.x == data_in[g_i].header.info.destination.x) && (data_in[g_i].header.info.source.y == data_in[g_i].header.info.destination.y)))); 
+    a_routing: assume property (@(posedge clk) disable iff (rst) (data_in[g_i].header.preamble.head) |-> 
+	    (((position.x == data_in[g_i].header.info.destination.x) && (position.y == data_in[g_i].header.info.destination.y) && (data_in[g_i].header.routing == 5'b10000)) ||
 	    ((position.x == data_in[g_i].header.info.destination.x) && (position.y > data_in[g_i].header.info.destination.y) && (data_in[g_i].header.routing == 5'b00001)) ||
 	    ((position.x == data_in[g_i].header.info.destination.x) && (position.y < data_in[g_i].header.info.destination.y) && (data_in[g_i].header.routing == 5'b00010)) ||
 	    ((position.x > data_in[g_i].header.info.destination.x) && (data_in[g_i].header.routing == 5'b00100)) ||
-	    ((position.x < data_in[g_i].header.info.destination.x) && (data_in[g_i].header.routing == 5'b01000)));
+	    ((position.x < data_in[g_i].header.info.destination.x) && (data_in[g_i].header.routing == 5'b01000))));
 
+    a_next_routing_onehot: assert property (@(posedge clk) (fifo_head[g_i].header.preamble.head) |-> ($onehot(next_hop_routing[g_i])))
+    else $error ("Fail: next_routing_not_one_hot");
     a_no_request_to_same_port: assert property (@(posedge clk) disable iff(rst)
       final_routing_request[g_i][g_i] == 1'b0)
       else $error("Fail: a_no_request_to_same_port");
-    a_enhanc_routing_configuration_onehot: assert property (@(posedge clk) disable iff(rst)
+    a_no_request_to_same_port_0: assert property (@(posedge clk) (fifo_head[g_i].header.preamble.head && (fifo_head[g_i].header.routing == noc::goNorth)) |=> (next_hop_routing[g_i] != noc::goSouth))
+      else $error("Fail: a_no_request_to_same_port_0");
+    a_no_request_to_same_port_1: assert property (@(posedge clk) (fifo_head[g_i].header.preamble.head && (fifo_head[g_i].header.routing == noc::goSouth)) |=> (next_hop_routing[g_i] != noc::goNorth))
+      else $error("Fail: a_no_request_to_same_port_1");
+    a_no_request_to_same_port_2: assert property (@(posedge clk) (fifo_head[g_i].header.preamble.head && (fifo_head[g_i].header.routing == noc::goEast)) |=> (next_hop_routing[g_i] != noc::goWest))
+      else $error("Fail: a_no_request_to_same_port_2");
+    a_no_request_to_same_port_3: assert property (@(posedge clk) (fifo_head[g_i].header.preamble.head && (fifo_head[g_i].header.routing == noc::goWest)) |=> (next_hop_routing[g_i] != noc::goEast))
+      else $error("Fail: a_no_request_to_same_port_3");
+
+      a_enhanc_routing_configuration_onehot: assert property (@(posedge clk) disable iff(rst)
       $onehot0(enhanc_routing_configuration[g_i]))
       else $error("Fail: a_enhanc_routing_configuration_onehot");
     a_expect_head_flit: assert property (@(posedge clk) disable iff(rst)
