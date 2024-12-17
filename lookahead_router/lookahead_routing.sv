@@ -85,4 +85,74 @@ module lookahead_routing
     endcase
   end
 
+`ifndef SYNTHESIS
+// pragma coverage off
+//VCS coverage off
+    a_current_onehot: assume property (@(posedge clk) $onehot0(current_routing))
+      else $error("Fail: a_current_onehot");
+//    a_current_position_x: assume property (@(posedge clk) ((position.x < 3) && (position.x >= 0)))
+//      else $error("Fail: a_current_position_x");
+//    a_current_position_y: assume property (@(posedge clk) ((position.y < 3) && (position.y >= 0)))
+//      else $error("Fail: a_current_position_y");
+//    a_destination_x: assume property (@(posedge clk) ((destination.x < 3) && (destination.x >= 0)))
+//      else $error("Fail: a_destination_x");
+//    a_destination_y: assume property (@(posedge clk) ((destination.y < 3) && (destination.y >= 0)))
+//      else $error("Fail: a_destination_y");
+    a_dest_coordinates_0: assume property (@(posedge clk) (current_routing == noc::goNorth) |-> ((destination.x == next_position_q[noc::kNorthPort].x) && (destination.y <= next_position_q[noc::kNorthPort].y)))
+      else $error("Fail: a_dest_coordinates_0");
+    a_dest_coordinates_1: assume property (@(posedge clk) (current_routing == noc::goSouth) |-> ((destination.x == next_position_q[noc::kSouthPort].x) && (destination.y >= next_position_q[noc::kSouthPort].y)))
+      else $error("Fail: a_dest_coordinates_1");
+    a_dest_coordinates_2: assume property (@(posedge clk) (current_routing == noc::goEast) |-> (destination.x >= next_position_q[noc::kEastPort].x))
+      else $error("Fail: a_dest_coordinates_2");
+    a_dest_coordinates_3: assume property (@(posedge clk) (current_routing == noc::goWest) |-> (destination.x <= next_position_q[noc::kWestPort].x))
+      else $error("Fail: a_dest_coordinates_3");
+  
+    a_no_request_to_same_port_0: assert property (@(posedge clk) (current_routing == noc::goNorth) |-> (next_routing != noc::goSouth))
+      else $error("Fail: a_no_request_to_same_port_0");
+    a_no_request_to_same_port_1: assert property (@(posedge clk) (current_routing == noc::goSouth) |-> (next_routing != noc::goNorth))
+      else $error("Fail: a_no_request_to_same_port_1");
+    a_no_request_to_same_port_2: assert property (@(posedge clk) (current_routing == noc::goWest) |-> (next_routing != noc::goEast))
+      else $error("Fail: a_no_request_to_same_port_2"); 
+    a_no_request_to_same_port_3: assert property (@(posedge clk) (current_routing == noc::goEast) |-> (next_routing != noc::goWest))
+      else $error("Fail: a_no_request_to_same_port_3");
+    a_next_routing_one_hot: assert property (@(posedge clk) $onehot0(next_routing))
+      else $error("Fail: next_routing_not_one_hot");
+    a_coordinate_0: assert property (@(posedge clk) (current_routing == noc::goNorth) |-> ((next_position_d[noc::kNorthPort].x == position.x) && (next_position_d[noc::kNorthPort].y == position.y - 1'b1)))
+      else $error("Fail: position_0_error");
+    a_coordinate_1: assert property (@(posedge clk) (current_routing == noc::goSouth) |-> ((next_position_d[noc::kSouthPort].x == position.x) && (next_position_d[noc::kSouthPort].y == position.y + 1'b1)))
+      else $error("Fail: position_1_error");
+    a_coordinate_2: assert property (@(posedge clk) (current_routing == noc::goEast) |-> ((next_position_d[noc::kEastPort].x == position.x + 1'b1) && (next_position_d[noc::kEastPort].y == position.y)))
+      else $error("Fail: position_2_error");
+    a_coordinate_3: assert property (@(posedge clk) (current_routing == noc::goWest) |-> ((next_position_d[noc::kWestPort].x == position.x - 1'b1) && (next_position_d[noc::kWestPort].y == position.y)))
+      else $error("Fail: position_3_error");
+
+      a_next_direction_1_1: assert property (@(posedge clk) ((current_routing == noc::goNorth) && (next_position_q[noc::kNorthPort].x == destination.x) && (next_position_q[noc::kNorthPort].y == destination.y)) |-> (next_routing == noc::goLocal))
+        else $error("Fail: next_direction_1_1");
+      a_next_direction_1_2: assert property (@(posedge clk) ((current_routing == noc::goSouth) && (next_position_q[noc::kSouthPort].x == destination.x) && (next_position_q[noc::kSouthPort].y == destination.y)) |-> (next_routing == noc::goLocal))
+        else $error("Fail: next_direction_1_2");
+      a_next_direction_1_3: assert property (@(posedge clk) ((current_routing == noc::goEast) && (next_position_q[noc::kEastPort].x == destination.x) && (next_position_q[noc::kEastPort].y == destination.y)) |-> (next_routing == noc::goLocal))
+        else $error("Fail: next_direction_1_3");
+      a_next_direction_1_4: assert property (@(posedge clk) ((current_routing == noc::goWest) && (next_position_q[noc::kWestPort].x == destination.x) && (next_position_q[noc::kWestPort].y == destination.y)) |-> (next_routing == noc::goLocal))
+        else $error("Fail: next_direction_1_4"); 
+      a_next_direction_2: assert property (@(posedge clk) ((current_routing == noc::goEast) && (next_position_q[noc::kEastPort].x < destination.x)) |-> (next_routing == noc::goEast))
+        else $error("Fail: next_direction_2");
+      a_next_direction_3: assert property (@(posedge clk) ((current_routing == noc::goWest) && (next_position_q[noc::kWestPort].x > destination.x)) |-> (next_routing == noc::goWest))
+        else $error("Fail: next_direction_3");
+      a_next_direction_4: assert property (@(posedge clk) ((current_routing == noc::goEast) && (next_position_q[noc::kEastPort].x == destination.x) && (next_position_q[noc::kEastPort].y < destination.y)) |-> (next_routing == noc::goSouth))
+        else $error("Fail: next_direction_4");
+      a_next_direction_5: assert property (@(posedge clk) ((current_routing == noc::goWest) && (next_position_q[noc::kWestPort].x == destination.x) && (next_position_q[noc::kWestPort].y < destination.y)) |-> (next_routing == noc::goSouth))
+        else $error("Fail: next_direction_5");
+      a_next_direction_6: assert property (@(posedge clk) ((current_routing == noc::goSouth) && (next_position_q[noc::kSouthPort].x == destination.x) && (next_position_q[noc::kSouthPort].y < destination.y)) |-> (next_routing == noc::goSouth))
+        else $error("Fail: next_direction_6"); 
+      a_next_direction_7: assert property (@(posedge clk) ((current_routing == noc::goEast) && (next_position_q[noc::kEastPort].x == destination.x) && (next_position_q[noc::kEastPort].y > destination.y)) |-> (next_routing == noc::goNorth))
+        else $error("Fail: next_direction_7");
+      a_next_direction_8: assert property (@(posedge clk) ((current_routing == noc::goWest) && (next_position_q[noc::kWestPort].x == destination.x) && (next_position_q[noc::kWestPort].y > destination.y)) |-> (next_routing == noc::goNorth))
+        else $error("Fail: next_direction_8");
+      a_next_direction_9: assert property (@(posedge clk) ((current_routing == noc::goNorth) && (next_position_q[noc::kNorthPort].x == destination.x) && (next_position_q[noc::kNorthPort].y > destination.y)) |-> (next_routing == noc::goNorth))
+        else $error("Fail: next_direction_9");
+	
+// pragma coverage on
+//VCS coverage on
+`endif // ~SYNTHESIS
+
 endmodule
