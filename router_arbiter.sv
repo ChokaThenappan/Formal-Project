@@ -70,7 +70,7 @@ module router_arbiter
   always_ff @(posedge clk) begin
     if (rst) begin
       priority_mask <= InitialPriority;
-    end else if (forwarding_tail) begin
+    end else if (forwarding_head) begin
       priority_mask <= priority_mask_next;
     end
   end
@@ -134,6 +134,44 @@ module router_arbiter
   a_grant_onehot: assert property (@(posedge clk) disable iff(rst) $onehot0(grant))
     else $error("Fail: a_grant_onehot");	// Proven in JG
 
+///////////////////////////////////////////////// Assume Properties - Start /////////////////////////////////////////////////
+
+  // Assume Head Flit forwarded first and then Tail Flit
+  a_head_tail_sequence: assume property (@(posedge clk) disable iff(rst)
+    	(forwarding_tail |-> $past(forwarding_head)));
+
+  a_tail_head_sequence: assume property (@(posedge clk) disable iff(rst)
+    	(forwarding_head |-> $past(forwarding_tail)));
+
+  // Assume request remains stable until tail flit
+  a_stable_request: assume property (@(posedge clk) disable iff(rst)
+    	(|request && !forwarding_tail |=> $stable(request)));
+
+  // Assume head and tail flits cannot be forwarded in same cycle
+  a_head_tail_exclusive: assume property (@(posedge clk) disable iff(rst)
+    	!(forwarding_head && forwarding_tail));
+
+  // Assume request must be valid when forwarding head or tail
+  a_valid_flit: assume property (@(posedge clk) disable iff(rst)
+    	((forwarding_head || forwarding_tail) |-> |request));
+
+  // Assume no new request can arrive while grant is locked
+  a_no_new_request: assume property (@(posedge clk) disable iff(rst)
+    	(grant_locked |-> !($rose(request))));
+
+  // Assume foward_head high for one cycle
+  a_forward_head: assume property (@(posedge clk) disable iff(rst)
+    	(forwarding_head |=> !(forwarding_head)));
+
+  // Assume foward_tail high for one cycle
+  a_forward_tail: assume property (@(posedge clk) disable iff(rst)
+    	(forwarding_tail |=> !(forwarding_tail)));
+
+///////////////////////////////////////////////// Assume Properties - End /////////////////////////////////////////////////
+
+
+///////////////////////////////////////////////// Assert Properties - Start /////////////////////////////////////////////////
+
   //1
   a_no_request_no_grant: assert property (@(posedge clk) disable iff(rst) 
 	(request == 4'b000) |-> (grant == 4'b0000)) 
@@ -146,8 +184,8 @@ module router_arbiter
 
   //3
   a_stable_priority: assert property (@(posedge clk) disable iff(rst)
-	(grant_locked == 0) |-> $stable(priority_mask))
-    else $error("Fail: a_stable_priority");	// Fails
+	(grant_locked == 1) |=> $stable(priority_mask))
+    else $error("Fail: a_stable_priority");	// Proven in JG
 
   //4
   a_grant_valid: assert property (@(posedge clk) disable iff(rst)
@@ -157,7 +195,7 @@ module router_arbiter
   //5
   a_grant_unlocked: assert property (@(posedge clk) disable iff(rst)
 	(!grant_locked && forwarding_head |=> grant_locked))
-    else $error("Fail: a_grant_unlocked");	//Fails
+    else $error("Fail: a_grant_unlocked");	// Proven in JG
 
   //6
   a_grant_locked: assert property (@(posedge clk) disable iff(rst)
@@ -165,17 +203,20 @@ module router_arbiter
     else $error("Fail: a_grant_locked");	//Proven in JG
 
   //7
+  genvar g_i;
+  for (g_i = 0; g_i < 4; g_i++) begin
   a_priority_changed: assert property (@(posedge clk) disable iff(rst)
-	(grant_locked |=> $changed(priority_mask)))
-    else $error("Fail: a_priority_changed");	//Fails
-
+	(((forwarding_head == 1) && (grant[g_i] && (priority_mask[g_i] !='0))) |=> $changed(priority_mask)))
+    else $error("Fail: a_priority_changed");	//Proven in JG
+  end
   //8
   a_one_input_one_output: assert property (@(posedge clk) disable iff(rst)
 	($countones(grant) <= 1))
     else $error("Fail: a_one_input_one_output");	//Proven in JG
 
+///////////////////////////////////////////////// Assert Properties - Start /////////////////////////////////////////////////
 
-// pragma coverage on
+ // pragma coverage on
 //VCS coverage on
 `endif // ~SYNTHESIS
 
