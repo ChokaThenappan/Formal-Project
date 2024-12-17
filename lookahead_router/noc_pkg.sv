@@ -10,8 +10,8 @@ package noc;
   parameter int unsigned PortQueueDepth = 4;
 
   // Coordinates
-  parameter int unsigned xMax = 8;
-  parameter int unsigned yMax = 8;
+  parameter int unsigned xMax = 16;
+  parameter int unsigned yMax = 16;
 
   // Message Type
   parameter int unsigned messageTypeWidth = 5;
@@ -53,6 +53,16 @@ package noc;
     get_onehot_port.go_local = (port == kLocalPort);
   endfunction // get_onehot_port
 
+  function automatic noc_port_t get_direction (
+    input direction_t direction);
+    if (direction.go_north) return kNorthPort;
+    else if (direction.go_south) return kSouthPort;
+    else if (direction.go_west) return kWestPort;
+    else if (direction.go_east) return kEastPort;
+    else if (direction.go_local) return kLocalPort;
+    else return kNorthPort;
+  endfunction // get_direction
+
   function automatic noc_port_t int2noc_port(
     input int i);
     case(i)
@@ -63,7 +73,7 @@ package noc;
       4 : return kLocalPort;
       default : return kNorthPort;
     endcase
-  endfunction // int2noc_port 
+  endfunction // int2noc_port
 
   parameter direction_t goNorth = get_onehot_port(kNorthPort);
   parameter direction_t goSouth = get_onehot_port(kSouthPort);
