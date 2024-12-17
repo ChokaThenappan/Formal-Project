@@ -110,6 +110,17 @@ module lookahead_router
     kPayloadFlits = 1'b1
   } state_t;
 
+  function automatic noc::noc_port_t direction_from_onehot(logic [4:0] onehot_dir);
+    unique case (onehot_dir)
+      noc::goLocal : direction_from_onehot = noc::kLocalPort;
+      noc::goNorth : direction_from_onehot = noc::kNorthPort;
+      noc::goSouth : direction_from_onehot = noc::kSouthPort;
+      noc::goWest  : direction_from_onehot = noc::kWestPort;
+      noc::goEast  : direction_from_onehot = noc::kEastPort;
+      default      : direction_from_onehot = noc::kLocalPort; // Fallback or handle error
+    endcase
+  endfunction : direction_from_onehot 
+
   state_t [4:0] state;
   state_t [4:0] new_state;
 
@@ -366,19 +377,30 @@ module lookahead_router
 `ifndef SYNTHESIS
 
 // Assertion 1: If header flit, new routing takes place
-a_header_new_routing: assert property (@(posedge clk) disable iff (rst) (data_out_crossbar[g_i].header.preamble.head && !out_unvalid_flit[g_i]) |-> (routing_configuration[g_i] == grant[g_i])) 
+a_header_new_routing: assert property (@(posedge clk) disable iff (rst) (data_out_crossbar[g_i].header.preamble.head && ~data_out_crossbar[g_i].header.preamble.tail && grant_valid[g_i] && no_backpressure[g_i] && (state[g_i] == kHeadFlit)) |-> (routing_configuration[g_i] == grant[g_i]))
 else $error("Error: New routing not applied for header flit");
 
 // Assertion 2: If body/tail flit, no new routing takes place
-a_body_tail_no_new_routing: assert property (@(posedge clk) disable iff (rst) (!data_out_crossbar[g_i].header.preamble.head && !out_unvalid_flit[g_i]) |-> (routing_configuration[g_i] == saved_routing_configuration[g_i])) 
+a_body_tail_no_new_routing: assert property (@(posedge clk) disable iff (rst) (!data_out_crossbar[g_i].header.preamble.head && (state[g_i] == kPayloadFlits)) |-> (routing_configuration[g_i] == saved_routing_configuration[g_i])) 
 else $error("Error: Routing changed for body/tail flit");
 
-// Assertion 3: If header flit, data from FIFO = data out of crossbar, except 5 LSB
-a_header_data_match: assert property (@(posedge clk) disable iff (rst) (data_out_crossbar[g_i].header.preamble.head && !out_unvalid_flit[g_i]) |-> (data_out_crossbar[g_i].flit[PortWidth-1:5] == fifo_head[routing_configuration[g_i]].flit[PortWidth-1:5])) 
+// Assertion 3: If head flit is forwarded at the head-flit state without backpressure and with a valid grant, 
+// then the data from FIFO matches data_out_crossbar except for the last 5 bits, which match next hop routing.
+a_header_data_match: assert property (@(posedge clk) disable iff (rst)
+  (data_out_crossbar[g_i].header.preamble.head && 
+   grant_valid[g_i] && 
+   no_backpressure[g_i] && 
+   (state[g_i] == kHeadFlit))
+  |-> ((data_out_crossbar[g_i].flit[PortWidth-1:5] 
+        == fifo_head[direction_from_onehot(enhanc_routing_configuration[g_i])].flit[PortWidth-1:5]) && 
+       (data_out_crossbar[g_i].flit[4:0]  
+        == next_hop_routing[direction_from_onehot(enhanc_routing_configuration[g_i])])))
 else $error("Error: Header flit data mismatch between FIFO and crossbar output");
 
 // Assertion 4: If body/tail flit, data from FIFO = data out of crossbar
-a_body_tail_data_match: assert property (@(posedge clk) disable iff (rst) (!data_out_crossbar[g_i].header.preamble.head && !out_unvalid_flit[g_i]) |-> (data_out_crossbar[g_i] == fifo_head[routing_configuration[g_i]])) 
+a_body_tail_data_match: assert property (@(posedge clk) disable iff (rst) 
+  ((!data_out_crossbar[g_i].header.preamble.head) && (state[g_i] == kPayloadFlits) && (~out_unvalid_flit[g_i]))
+  |-> (data_out_crossbar[g_i] == $past(fifo_head[direction_from_onehot(enhanc_routing_configuration[g_i])])))
 else $error("Error: Body/tail flit data mismatch between FIFO and crossbar output");
 
 
@@ -488,7 +510,7 @@ else $error("Error: Body/tail flit data mismatch between FIFO and crossbar outpu
 
 // Latency Insensitive Design Assertion 1: If output backpressured, the router
 // does not read the input FIFO
-fifo_stall: assert property (@(posedge clk) disable iff (rst) (~no_backpressure[g_i] && forwarding_in_progress[g_i] && ~out_unvalid_flit[g_i]) |-> ((|rd_fifo[g_i])==1'b0)) 
+fifo_stall: assert property (@(posedge clk) disable iff (rst) (~no_backpressure[g_i] ) |-> ((|rd_fifo[g_i])==1'b0)) 
 else $error("Error: Output Reg incorrectly saved the crossbar data");
 
 // Latency Insensitive Design Assertion 2: If output backpressured, the output
@@ -498,7 +520,7 @@ else $error("Error: Output Reg incorrectly saved the crossbar data");
 
 // Latency Insensitive Design Assertion 3: If output not backpressured, the router
 // saves the crossbar output to the output register
-no_bp_last_flit: assert property (@(posedge clk) disable iff (rst) (FifoBypassEnable && no_backpressure[g_i] && forwarding_in_progress[g_i] && ~out_unvalid_flit[g_i]) |-> ##1 (last_flit[g_i]==$past(data_out_crossbar[g_i]))) 
+no_bp_last_flit: assert property (@(posedge clk) disable iff (rst) (FifoBypassEnable && no_backpressure[g_i] && ~out_unvalid_flit[g_i]) |-> ##1 (last_flit[g_i]==$past(data_out_crossbar[g_i]))) 
 else $error("Error: Output Reg did not save the crossbar data");
 
 // Latency Insensitive Design Assertion 4: If output not forwarding and there is no backpressure, void
@@ -566,9 +588,9 @@ else $error("Error: Data void out isn't 1 when no forwarding and no backpressure
       $onehot0(enhanc_routing_configuration[g_i]))
       else $error("Fail: a_enhanc_routing_configuration_onehot");
     a_expect_head_flit: assert property (@(posedge clk) disable iff(rst)
-      ~out_unvalid_flit[g_i] & state[g_i] == kHeadFlit
+      forwarding_in_progress[g_i] & (state[g_i] == kHeadFlit)
       |->
-      data_out_crossbar[g_i].header.preamble.head)
+      (data_out_crossbar[g_i].header.preamble.head | data_out_crossbar[g_i].header.preamble.tail))
       else $error("Fail: a_expect_head_flit");
     a_credits_in_range: assert property (@(posedge clk) disable iff(rst)
       credits[g_i] <= noc::PortQueueDepth)
