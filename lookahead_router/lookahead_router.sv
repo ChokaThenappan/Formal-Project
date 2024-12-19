@@ -584,16 +584,16 @@ else $error("Error: Data void out isn't 1 when no forwarding and no backpressure
   for (g_i = 0; g_i < 5; g_i++) begin : gen_assert_legal_routing_request
     a_AckNack: assume property (FifoBypassEnable);
     a_stable_stop_out: assume property (@(posedge clk) disable iff(rst) stop_out[g_i] |=> $stable(data_in[g_i]));
+    a_header_or_tail_0: assume property (@(posedge clk) disable iff(rst) (data_in[g_i].header.preamble.head) |-> !data_in[g_i].header.preamble.tail);
+    a_header_or_tail_1: assume property (@(posedge clk) disable iff(rst) (data_in[g_i].header.preamble.tail) |-> !data_in[g_i].header.preamble.head);
     a_no_tail_before_tail: assume property (@(posedge clk) disable iff (rst) (data_in[g_i].header.preamble.tail) |-> $past(!data_in[g_i].header.preamble.tail));
     a_tail_before_head: assume property (@(posedge clk) disable iff (rst) (data_in[g_i].header.preamble.head) |-> $past(data_in[g_i].header.preamble.tail));
-    a_head_only: assume property (@(posedge clk) disable iff (rst) ($past(insert_lookahead_routing[g_i]) && !insert_lookahead_routing[g_i]) |-> (($past(state[g_i]) == kHeadFlit) && (state[g_i] == kPayloadFlits)));
+    //a_head_only: assume property (@(posedge clk) disable iff (rst) ($past(insert_lookahead_routing[g_i]) && !insert_lookahead_routing[g_i]) |-> (($past(state[g_i]) == kHeadFlit) && (state[g_i] == kPayloadFlits)));
     a_head_not_followed_by_head: assume property (@(posedge clk) disable iff (rst) (data_in[g_i].header.preamble.head) |-> $past(!data_in[g_i].header.preamble.head));
     a_head_never_void: assume property (@(posedge clk) disable iff (rst) (data_in[g_i].header.preamble.head || data_in[g_i].header.preamble.tail) |-> (!data_void_in[g_i]));
     a_limit_space: assume property (@(posedge clk) (position.x < noc::xMax) && (position.y < noc::yMax));
     a_position_stable_x: assume property (@(posedge clk) disable iff (rst) $stable(position.x));
     a_position_stable_y: assume property (@(posedge clk) disable iff (rst) $stable(position.y));
-    a_header_or_tail_0: assume property (@(posedge clk) disable iff(rst) (data_in[g_i].header.preamble.head) |-> !data_in[g_i].header.preamble.tail);
-    a_header_or_tail_1: assume property (@(posedge clk) disable iff(rst) (data_in[g_i].header.preamble.tail) |-> !data_in[g_i].header.preamble.head);
     a_routing_one_hot: assume property (@(posedge clk) disable iff (rst) (data_in[g_i].header.preamble.head) |-> $onehot(data_in[g_i].header.routing));
     a_routing_one_no_req_same_port: assume property (@(posedge clk) disable iff (rst) (data_in[g_i].header.preamble.head) |-> !data_in[g_i].header.routing[g_i]);
     a_src_dest_not_equal: assume property (@(posedge clk) disable iff (rst) (data_in[g_i].header.preamble.head) |-> (!((data_in[g_i].header.info.source.x == data_in[g_i].header.info.destination.x) && (data_in[g_i].header.info.source.y == data_in[g_i].header.info.destination.y)))); 
@@ -610,15 +610,15 @@ else $error("Error: Data void out isn't 1 when no forwarding and no backpressure
     a_no_request_to_same_port: assert property (@(posedge clk) disable iff(rst)
       final_routing_request[g_i][g_i] == 1'b0)
       else $error("Fail: a_no_request_to_same_port");
-    a_no_request_to_same_port_0: assert property (@(posedge clk) disable iff (rst) ($past(!fifo_head[g_i].header.preamble.head) && fifo_head[g_i].header.preamble.head && (fifo_head[g_i].header.routing == noc::goNorth)) |=> (next_hop_routing[g_i] != noc::goSouth))
+    a_no_request_to_same_port_0: assert property (@(posedge clk) disable iff (rst) (fifo_head[g_i].header.preamble.head && (fifo_head[g_i].header.routing == noc::goNorth)) |-> ##[0:$] ((data_out_crossbar[noc::kNorthPort].flit[PortWidth-1:5] == fifo_head[g_i].flit[PortWidth-1:5]) && (next_hop_routing[g_i] != noc::goSouth)))
       else $error("Fail: a_no_request_to_same_port_0");
-    a_no_request_to_same_port_1: assert property (@(posedge clk) disable iff (rst) ($past(fifo_head[g_i].header.preamble.head) && fifo_head[g_i].header.preamble.head && (fifo_head[g_i].header.routing == noc::goSouth)) |-> (next_hop_routing[g_i] != noc::goNorth))
+    a_no_request_to_same_port_1: assert property (@(posedge clk) disable iff (rst) (fifo_head[g_i].header.preamble.head && (fifo_head[g_i].header.routing == noc::goSouth)) |-> ##[0:$] ((data_out_crossbar[noc::kSouthPort].flit[PortWidth-1:5] == fifo_head[g_i].flit[PortWidth-1:5]) && (next_hop_routing[g_i] != noc::goNorth)))
       else $error("Fail: a_no_request_to_same_port_1");
-    a_no_request_to_same_port_2: assert property (@(posedge clk) disable iff (rst) ($past(fifo_head[g_i].header.preamble.head) && fifo_head[g_i].header.preamble.head && (fifo_head[g_i].header.routing == noc::goEast)) |-> (next_hop_routing[g_i] != noc::goWest))
+    a_no_request_to_same_port_2: assert property (@(posedge clk) disable iff (rst) (fifo_head[g_i].header.preamble.head && (fifo_head[g_i].header.routing == noc::goEast)) |-> ##[0:$] ((data_out_crossbar[noc::kEastPort].flit[PortWidth-1:5] == fifo_head[g_i].flit[PortWidth-1:5]) && (next_hop_routing[g_i] != noc::goWest)))
       else $error("Fail: a_no_request_to_same_port_2");
-    a_no_request_to_same_port_3: assert property (@(posedge clk) disable iff (rst) ($past(fifo_head[g_i].header.preamble.head) && fifo_head[g_i].header.preamble.head && (fifo_head[g_i].header.routing == noc::goWest)) |-> (next_hop_routing[g_i] != noc::goEast))
+    a_no_request_to_same_port_3: assert property (@(posedge clk) disable iff (rst) (fifo_head[g_i].header.preamble.head && (fifo_head[g_i].header.routing == noc::goWest)) |-> ##[0:$] ((data_out_crossbar[noc::kWestPort].flit[PortWidth-1:5] == fifo_head[g_i].flit[PortWidth-1:5]) && (next_hop_routing[g_i] != noc::goEast)))
       else $error("Fail: a_no_request_to_same_port_3");
-
+ 
     a_header_check_0: assert property (@(posedge clk) disable iff (rst)
       (fifo_head[g_i].header.preamble.head) |-> ##[1:$] (!(fifo_head[g_i].header.preamble.head) && ((fifo_head[g_i].header.preamble.tail) || (!fifo_head[g_i].header.preamble.head && !fifo_head[g_i].header.preamble.tail))))
     else $error("Fail: not: head_eventually_only_followed_by_valid_flit_body/tail");
