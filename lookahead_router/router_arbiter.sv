@@ -70,7 +70,7 @@ module router_arbiter
   always_ff @(posedge clk) begin
     if (rst) begin
       priority_mask <= InitialPriority;
-    end else if (forwarding_tail) begin
+    end else if (forwarding_head) begin
       priority_mask <= priority_mask_next;
     end
   end
@@ -132,9 +132,55 @@ module router_arbiter
 //VCS coverage off
 
   a_grant_onehot: assert property (@(posedge clk) disable iff(rst) $onehot0(grant))
-    else $error("Fail: a_grant_onehot");
+    else $error("Fail: a_grant_onehot");	// Proven in JG
 
-// pragma coverage on
+///////////////////////////////////////////////// Assert Properties - Start /////////////////////////////////////////////////
+
+  //1
+  a_no_request_no_grant: assert property (@(posedge clk) disable iff(rst) 
+	(request == 4'b000) |-> (grant == 4'b0000)) 
+    else $error("Fail: a_no_request_no_grant");	// Proven in JG
+  
+  //2
+  a_grant_lock_zero: assert property (@(posedge clk) disable iff(rst) 
+	(grant_locked == 0) |-> ($onehot0(grant))) 
+    else $error("Fail: a_grant_lock_zero");	// Proven in JG
+
+  //3
+  a_stable_priority: assert property (@(posedge clk) disable iff(rst)
+	(grant_locked == 1) |=> $stable(priority_mask))
+    else $error("Fail: a_stable_priority");	// Proven in JG
+
+  //4
+  a_grant_valid: assert property (@(posedge clk) disable iff(rst)
+	(!grant_locked && |request |-> grant_valid))
+    else $error("Fail: a_grant_valid");		// Proven in JG
+
+  //5
+  a_grant_unlocked: assert property (@(posedge clk) disable iff(rst)
+	(!grant_locked && forwarding_head |=> grant_locked))
+    else $error("Fail: a_grant_unlocked");	// Proven in JG
+
+  //6
+  a_grant_locked: assert property (@(posedge clk) disable iff(rst)
+	(grant_locked && forwarding_tail |=> !grant_locked))
+    else $error("Fail: a_grant_locked");	//Proven in JG
+
+  //7
+  genvar g_i;
+  for (g_i = 0; g_i < 4; g_i++) begin
+  a_priority_changed: assert property (@(posedge clk) disable iff(rst)
+	(((forwarding_head == 1) && (grant[g_i] && (priority_mask[g_i] !='0))) |=> $changed(priority_mask)))
+    else $error("Fail: a_priority_changed");	//Proven in JG
+  end
+  //8
+  a_one_input_one_output: assert property (@(posedge clk) disable iff(rst)
+	($countones(grant) <= 1))
+    else $error("Fail: a_one_input_one_output");	//Proven in JG
+
+///////////////////////////////////////////////// Assert Properties - Start /////////////////////////////////////////////////
+
+ // pragma coverage on
 //VCS coverage on
 `endif // ~SYNTHESIS
 

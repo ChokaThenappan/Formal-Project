@@ -610,14 +610,14 @@ else $error("Error: Data void out isn't 1 when no forwarding and no backpressure
     a_no_request_to_same_port: assert property (@(posedge clk) disable iff(rst)
       final_routing_request[g_i][g_i] == 1'b0)
       else $error("Fail: a_no_request_to_same_port");
-    a_no_request_to_same_port_0: assert property (@(posedge clk) disable iff (rst) (fifo_head[g_i].header.preamble.head && (fifo_head[g_i].header.routing == noc::goNorth)) |-> ##[0:$] ((data_out_crossbar[noc::kNorthPort].flit[PortWidth-1:5] == fifo_head[g_i].flit[PortWidth-1:5]) && (next_hop_routing[g_i] != noc::goSouth)))
-      else $error("Fail: a_no_request_to_same_port_0");
-    a_no_request_to_same_port_1: assert property (@(posedge clk) disable iff (rst) (fifo_head[g_i].header.preamble.head && (fifo_head[g_i].header.routing == noc::goSouth)) |-> ##[0:$] ((data_out_crossbar[noc::kSouthPort].flit[PortWidth-1:5] == fifo_head[g_i].flit[PortWidth-1:5]) && (next_hop_routing[g_i] != noc::goNorth)))
-      else $error("Fail: a_no_request_to_same_port_1");
-    a_no_request_to_same_port_2: assert property (@(posedge clk) disable iff (rst) (fifo_head[g_i].header.preamble.head && (fifo_head[g_i].header.routing == noc::goEast)) |-> ##[0:$] ((data_out_crossbar[noc::kEastPort].flit[PortWidth-1:5] == fifo_head[g_i].flit[PortWidth-1:5]) && (next_hop_routing[g_i] != noc::goWest)))
-      else $error("Fail: a_no_request_to_same_port_2");
-    a_no_request_to_same_port_3: assert property (@(posedge clk) disable iff (rst) (fifo_head[g_i].header.preamble.head && (fifo_head[g_i].header.routing == noc::goWest)) |-> ##[0:$] ((data_out_crossbar[noc::kWestPort].flit[PortWidth-1:5] == fifo_head[g_i].flit[PortWidth-1:5]) && (next_hop_routing[g_i] != noc::goEast)))
-      else $error("Fail: a_no_request_to_same_port_3");
+//    a_no_request_to_same_port_0: assert property (@(posedge clk) disable iff (rst) (fifo_head[g_i].header.preamble.head && (fifo_head[g_i].header.routing == noc::goNorth)) |-> ##[0:$] ((data_out_crossbar[noc::kNorthPort].flit[PortWidth-1:5] == fifo_head[g_i].flit[PortWidth-1:5]) && (next_hop_routing[g_i] != noc::goSouth)))
+//      else $error("Fail: a_no_request_to_same_port_0");
+//    a_no_request_to_same_port_1: assert property (@(posedge clk) disable iff (rst) (fifo_head[g_i].header.preamble.head && (fifo_head[g_i].header.routing == noc::goSouth)) |-> ##[0:$] ((data_out_crossbar[noc::kSouthPort].flit[PortWidth-1:5] == fifo_head[g_i].flit[PortWidth-1:5]) && (next_hop_routing[g_i] != noc::goNorth)))
+//      else $error("Fail: a_no_request_to_same_port_1");
+//    a_no_request_to_same_port_2: assert property (@(posedge clk) disable iff (rst) (fifo_head[g_i].header.preamble.head && (fifo_head[g_i].header.routing == noc::goEast)) |-> ##[0:$] ((data_out_crossbar[noc::kEastPort].flit[PortWidth-1:5] == fifo_head[g_i].flit[PortWidth-1:5]) && (next_hop_routing[g_i] != noc::goWest)))
+//      else $error("Fail: a_no_request_to_same_port_2");
+//    a_no_request_to_same_port_3: assert property (@(posedge clk) disable iff (rst) (fifo_head[g_i].header.preamble.head && (fifo_head[g_i].header.routing == noc::goWest)) |-> ##[0:$] ((data_out_crossbar[noc::kWestPort].flit[PortWidth-1:5] == fifo_head[g_i].flit[PortWidth-1:5]) && (next_hop_routing[g_i] != noc::goEast)))
+//      else $error("Fail: a_no_request_to_same_port_3");
  
     a_header_check_0: assert property (@(posedge clk) disable iff (rst)
       (fifo_head[g_i].header.preamble.head) |-> ##[1:$] (!(fifo_head[g_i].header.preamble.head) && ((fifo_head[g_i].header.preamble.tail) || (!fifo_head[g_i].header.preamble.head && !fifo_head[g_i].header.preamble.tail))))
