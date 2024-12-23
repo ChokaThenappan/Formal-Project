@@ -135,10 +135,10 @@ module router_fifo
 // Properties defined for Formal Verification - CSEE 6863
 
 // Assumtion on the Input Functionality
-	a_no_read_when_empty: assume property (@(posedge clk) disable iff(rst) !(rdreq && empty))
-	else $error("Fail: Read when FIFO is empty");
-	a_no_write_when_full: assume property (@(posedge clk) disable iff(rst) !(wrreq && full))
-	else $error("Fail: Write when FIFO is full");
+//	a_no_read_when_empty: assume property (@(posedge clk) disable iff(rst) !(rdreq && empty))
+//	else $error("Fail: Read when FIFO is empty");
+//	a_no_write_when_full: assume property (@(posedge clk) disable iff(rst) !(wrreq && full))
+//	else $error("Fail: Write when FIFO is full");
 // Flit Type 
 //	a_header_on_empty: assume property (@(posedge clk) disable iff(rst) empty |-> data_in[Width-1:Width-2] == 2'b10)
 //	else $error("Fail: Header flit must enter when FIFO is empty");
